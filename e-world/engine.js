@@ -1,4 +1,4 @@
-import {projects} from './data.js?v=7';
+import {projects} from './data.js?v=8';
 export function statusOf(p, now=new Date()) {
  if(p.deadline && now>new Date(p.deadline)) return '校内报名已截止';
  if(p.id==='fei' && now.getFullYear()!==2026) return '历史政策待更新';
