@@ -23,13 +23,14 @@ pdfmetrics.registerFontFamily('CMU', normal='CMU', bold='CMU-Bold', italic='CMU-
 INK = colors.HexColor('#171717')
 GRAY = colors.HexColor('#555555')
 LINK = '#263f8e'
+HEADING = colors.HexColor(LINK)
 PAGE_W, PAGE_H = A4
 MARGIN = 39.685
 WIDTH = PAGE_W - 2 * MARGIN
 BASE = dict(fontName='CMU', fontSize=10.9, leading=13.6, textColor=INK)
 styles = {
     'body': ParagraphStyle('body', **BASE, spaceAfter=5),
-    'name': ParagraphStyle('name', fontName='CMU-Bold', fontSize=16, leading=20, alignment=TA_CENTER, spaceAfter=11),
+    'name': ParagraphStyle('name', fontName='CMU-Bold', fontSize=23, leading=27, alignment=TA_CENTER, spaceAfter=11, textColor=INK),
     'contact': ParagraphStyle('contact', **(BASE | dict(fontSize=9.9, leading=13.3))),
     'right': ParagraphStyle('right', **(BASE | dict(fontSize=9.9, leading=13.3)), alignment=TA_RIGHT),
     'detail': ParagraphStyle('detail', fontName='CMU-Italic', fontSize=9.6, leading=12.6, textColor=INK, spaceAfter=3),
@@ -59,7 +60,7 @@ class Section(Flowable):
         return availWidth, self.height
     def draw(self):
         c = self.canv
-        c.setFillColor(INK)
+        c.setFillColor(HEADING)
         x = 0
         for word in self.title.split(' '):
             for i, char in enumerate(word):
@@ -68,7 +69,7 @@ class Section(Flowable):
                 c.drawString(x, 10, char.upper())
                 x += pdfmetrics.stringWidth(char.upper(), 'CMU-Bold', size)
             x += 3.3
-        c.setStrokeColor(INK)
+        c.setStrokeColor(HEADING)
         c.setLineWidth(.4)
         c.line(0, 5.5, self.width, 5.5)
 
@@ -104,7 +105,7 @@ entry('Sun Yat-sen University', 'Sep 2017 - Jun 2021',
       "Bachelor's degree in Computational Materials", 'School of Materials, Guangzhou, China')
 
 section('Work Experience')
-entry('Alibaba Holding', 'Aug 3, 2026 - Present', 'Large Language Model Algorithm Engineer', title_style='company')
+entry('Alibaba Holding', 'Aug 2026 - Present', 'Large Language Model Algorithm Engineer', title_style='company')
 for text in [
     '<i>Code Agent Data Synthesis:</i> Generate synthetic training data for code agents across Terminal-Bench 3.0, machine learning, and scientific problem-solving tasks.',
     '<i>Multimodal Agent Training:</i> Train multimodal agents with reflection, OPD, tool calling, revisiting prior observations, and reinforcement learning.',
@@ -112,7 +113,7 @@ for text in [
 ]:
     add('• '+text, 'work')
 story.append(Spacer(1,3))
-entry('Alibaba International', 'Jul 4, 2024 - Jul 3, 2026', 'Large Language Model Algorithm Engineer', title_style='company')
+entry('Alibaba International', 'Jul 2024 - Jul 2026', 'Large Language Model Algorithm Engineer', title_style='company')
 for text in [
     '<i>Customer service agents:</i> Contributed to AliExpress pre-sales and after-sales agents, including planner-reasoner architectures, tool calling, reward evaluation, and alignment with DPO and GRPO.',
     '<i>Multimodal review:</i> Worked on image-based review with multimodal models, OCR, image classification, and preference alignment.',
@@ -120,13 +121,13 @@ for text in [
 ]:
     add('• '+text, 'work')
 section('Internship Experience')
-entry('Alibaba International <font name="CMU-Italic" size="9.6"> | Research Intern</font>',
-    'Dec 2023 - Feb 2024',
-    body='RLHF/DPO and automated evaluation for customer service LLMs.', title_style='company')
-story.append(Spacer(1,3))
 entry('Tencent AI Lab <font name="CMU-Italic" size="9.6"> | Research Intern</font>',
     'May 2023 - Oct 2023',
     body='LLM role-playing, game commentary/reporting, and PPO-based context extension.', title_style='company')
+story.append(Spacer(1,3))
+entry('Alibaba International <font name="CMU-Italic" size="9.6"> | Research Intern</font>',
+    'Dec 2023 - Feb 2024',
+    body='RLHF/DPO and automated evaluation for customer service LLMs.', title_style='company')
 
 # Prioritize first-authored papers; let citations flow into remaining page space.
 publications = [
@@ -180,7 +181,7 @@ for text in [
 def footer(canvas, doc):
     canvas.setFillColor(GRAY)
     canvas.setFont('CMU', 9)
-    canvas.drawCentredString(PAGE_W/2, 24, 'Last updated: October 23, 2026')
+    canvas.drawCentredString(PAGE_W/2, 24, 'Last updated: November 23, 2026')
     canvas.drawRightString(PAGE_W-MARGIN, 24, str(doc.page))
     if doc.page > 1:
         canvas.setFont('CMU-Italic',9)
